@@ -1,10 +1,10 @@
 package module1;
 
+import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 import processing.core.PApplet;
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.geo.Location;
 import de.fhpotsdam.unfolding.providers.AbstractMapProvider;
-import de.fhpotsdam.unfolding.providers.Google;
 import de.fhpotsdam.unfolding.providers.MBTilesMapProvider;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 
@@ -36,7 +36,7 @@ public class HelloWorld extends PApplet
 	UnfoldingMap map2;
 
 	public void setup() {
-		size(800, 600, P2D);  // Set up the Applet window to be 800x600
+		size(850, 600, P2D);  // Set up the Applet window to be 800x600
 		                      // The OPENGL argument indicates to use the 
 		                      // Processing library's 2D drawing
 		                      // You'll learn more about processing in Module 3
@@ -46,7 +46,7 @@ public class HelloWorld extends PApplet
 		this.background(200, 200, 200);
 		
 		// Select a map provider
-		AbstractMapProvider provider = new Google.GoogleTerrainProvider();
+            AbstractMapProvider provider = new OpenStreetMap.OpenStreetMapProvider();
 		// Set a zoom level
 		int zoomLevel = 10;
 
@@ -76,6 +76,14 @@ public class HelloWorld extends PApplet
 		
 		// TODO: Add code here that creates map2 
 		// Then you'll modify draw() below
+        map2 = new UnfoldingMap(this, 450, 50, 350, 500, provider);
+
+        // The next line zooms in and centers the map at
+        // 32.9 (latitude) and -117.2 (longitude)
+        map2.zoomAndPanTo(zoomLevel, new Location(32.9f, -117.2f));
+
+        // This line makes the map interactive
+        MapUtils.createDefaultEventDispatcher(this, map2);
 
 	}
 
@@ -84,6 +92,7 @@ public class HelloWorld extends PApplet
 		// So far we only draw map1...
 		// TODO: Add code so that both maps are displayed
 		map1.draw();
+        map2.draw();
 	}
 
 	
